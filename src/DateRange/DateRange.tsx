@@ -6,12 +6,13 @@ import {
 import { FC, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { IDateRange } from "./DateRange.type";
 
-const CustomDay: FC<{ day: any; onDaySelect: (day: any) => void }> = ({
+const CustomDay: FC<{ day: object; onDaySelect: (day: unknown) => void }> = ({
   day,
   onDaySelect,
 }) => {
-  const date = day.$d;
+  const date = day && "$d" in day ? (day.$d as Date) : undefined;
   // console.log(date);
   return (
     <PickersDay
@@ -25,12 +26,12 @@ const CustomDay: FC<{ day: any; onDaySelect: (day: any) => void }> = ({
 };
 
 const DateRange: FC = () => {
-  const [range, setRange] = useState<{ start: Date | 0; end: Date | 0 }>({
+  const [range, setRange] = useState<IDateRange>({
     start: 0,
     end: 0,
   });
 
-  const onDaySelect = (day: any) => {
+  const onDaySelect = (day: Date) => {
     setRange((prev) => {
       if (!prev.start && !prev.end) {
         return {
@@ -38,6 +39,37 @@ const DateRange: FC = () => {
           end: day,
         };
       }
+
+      if (!prev.start && prev.end) {
+        if (prev.end.getTime() === day.getTime()) {
+          return {
+            start: 0,
+            end: prev.end,
+          };
+        }
+        if (prev.end.getTime() > day.getTime()) {
+          return {
+            start: day,
+            end: prev.end,
+          };
+        }
+        return {
+          start: prev.end,
+          end: day,
+        };
+      }
+
+      if (prev.start && prev.end) {
+        return {
+          start: 0,
+          end: day,
+        };
+      }
+
+      return {
+        start: 0,
+        end: 0,
+      };
     });
   };
 

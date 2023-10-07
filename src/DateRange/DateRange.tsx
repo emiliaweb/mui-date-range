@@ -8,19 +8,33 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { IDateRange } from "./DateRange.type";
 
-const CustomDay: FC<{ day: object; onDaySelect: (day: unknown) => void }> = ({
-  day,
-  onDaySelect,
-}) => {
-  const date = day && "$d" in day ? (day.$d as Date) : undefined;
-  // console.log(date);
+const CustomDay: FC<{
+  day: any;
+  onDaySelect: (day: any) => void;
+  range: IDateRange;
+}> = ({ day, onDaySelect, range }) => {
+  const date = day.$d;
+
+  const isStart = range.start && date.getTime() === range.start.getTime();
+  const isEnd = range.end && date.getTime() === range.end.getTime();
+  const isBetween =
+    range.start &&
+    range.end &&
+    date.getTime() > range.start.getTime() &&
+    date.getTime() < range.end.getTime();
+
+  const style = {
+    backgroundColor: isEnd || isStart || isBetween ? "red" : "none",
+  };
+
   return (
     <PickersDay
       day={day}
-      onDaySelect={() => onDaySelect(date)}
+      onDaySelect={() => onDaySelect(date as Date)}
       isFirstVisibleCell={true}
       isLastVisibleCell={true}
       outsideCurrentMonth={false}
+      sx={style}
     />
   );
 };
@@ -73,7 +87,7 @@ const DateRange: FC = () => {
     });
   };
 
-  console.log(range);
+  // console.log(range);
 
   return (
     <>
@@ -85,7 +99,7 @@ const DateRange: FC = () => {
             day: CustomDay,
           }}
           slotProps={{
-            day: { onDaySelect },
+            day: { onDaySelect, range },
           }}
         />
       </LocalizationProvider>

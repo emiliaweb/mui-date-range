@@ -1,9 +1,9 @@
 import { PickersDayProps, PickersDay } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
-import { FC, useState, useEffect } from "react";
+import { useState, useEffect, ComponentType } from "react";
 import { ICustomDayProps } from "./CustomDay.type";
 
-const CustomDay: FC<ICustomDayProps & PickersDayProps<Dayjs>> = ({
+const CustomDay: ComponentType<ICustomDayProps & PickersDayProps<Dayjs>> = ({
   day,
   onPickDay,
   range,
@@ -46,7 +46,6 @@ const CustomDay: FC<ICustomDayProps & PickersDayProps<Dayjs>> = ({
       isFirstVisibleCell={true}
       isLastVisibleCell={true}
       outsideCurrentMonth={false}
-      disableHighlightToday={true}
       selected={isEnd || isStart || isBetween}
     />
   );

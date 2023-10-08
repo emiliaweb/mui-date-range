@@ -65,7 +65,7 @@ const DateRange: FC = () => {
             day: CustomDay,
           }}
           slotProps={{
-            day: { onDaySelect: onPickDay, range },
+            day: { onPickDay, range },
           }}
         />
       </LocalizationProvider>

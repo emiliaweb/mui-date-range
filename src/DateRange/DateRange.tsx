@@ -3,7 +3,7 @@ import {
   LocalizationProvider,
   PickersDay,
 } from "@mui/x-date-pickers";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { IDateRange } from "./DateRange.type";
@@ -15,17 +15,38 @@ const CustomDay: FC<{
 }> = ({ day, onDaySelect, range }) => {
   const date = day.$d;
 
-  const isStart = range.start && date.getTime() === range.start.getTime();
-  const isEnd = range.end && date.getTime() === range.end.getTime();
-  const isBetween =
-    range.start &&
-    range.end &&
-    date.getTime() > range.start.getTime() &&
-    date.getTime() < range.end.getTime();
+  const [isStart, setIsStart] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
+  const [isBetween, setIsBetween] = useState(false);
 
-  const style = {
-    backgroundColor: isEnd || isStart || isBetween ? "red" : "none",
-  };
+  useEffect(() => {
+    if (range.start && date.getTime() === range.start.getTime()) {
+      setIsStart(true);
+      setIsEnd(false);
+      setIsBetween(false);
+    } else if (range.end && date.getTime() === range.end.getTime()) {
+      setIsStart(false);
+      setIsEnd(true);
+      setIsBetween(false);
+    } else if (
+      range.start &&
+      range.end &&
+      date.getTime() > range.start.getTime() &&
+      date.getTime() < range.end.getTime()
+    ) {
+      setIsStart(false);
+      setIsEnd(false);
+      setIsBetween(true);
+    } else {
+      setIsStart(false);
+      setIsEnd(false);
+      setIsBetween(false);
+    }
+  }, [date, range]);
+
+  // const style = {
+  //   backgroundColor: isEnd || isStart || isBetween ? "red" : "none",
+  // };
 
   return (
     <PickersDay
@@ -34,7 +55,9 @@ const CustomDay: FC<{
       isFirstVisibleCell={true}
       isLastVisibleCell={true}
       outsideCurrentMonth={false}
-      sx={style}
+      disableHighlightToday={true}
+      selected={isEnd || isStart || isBetween}
+      // sx={style}
     />
   );
 };

@@ -3,11 +3,9 @@ import { Dayjs } from "dayjs";
 import { useState, useEffect, ComponentType } from "react";
 import { ICustomDayProps } from "./CustomDay.type";
 
-const CustomDay: ComponentType<ICustomDayProps & PickersDayProps<Dayjs>> = ({
-  day,
-  onPickDay,
-  range,
-}) => {
+const CustomDayBase: ComponentType<
+  PickersDayProps<Dayjs> & ICustomDayProps
+> = ({ day, onPickDay, range }) => {
   const date = day.toDate();
 
   const [isStart, setIsStart] = useState(false);
@@ -51,4 +49,8 @@ const CustomDay: ComponentType<ICustomDayProps & PickersDayProps<Dayjs>> = ({
   );
 };
 
-export default CustomDay;
+export default CustomDayBase;
+
+export const CustomDay: ComponentType<PickersDayProps<Dayjs>> = (props) => {
+  return <CustomDay {...(props as PickersDayProps<Dayjs> & ICustomDayProps)} />;
+};

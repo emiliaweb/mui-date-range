@@ -3,7 +3,8 @@ import { FC, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { IDateRange } from "./DateRange.type";
-import CustomDay from "../CustomDay/CustomDay";
+import { CustomDay } from "../CustomDay/CustomDay";
+import { ICustomDayProps } from "../CustomDay/CustomDay.type";
 
 const DateRange: FC = () => {
   const [range, setRange] = useState<IDateRange>({
@@ -53,7 +54,7 @@ const DateRange: FC = () => {
     });
   };
 
-  // console.log(range);
+  console.log(range);
 
   return (
     <>
@@ -65,7 +66,7 @@ const DateRange: FC = () => {
             day: CustomDay,
           }}
           slotProps={{
-            day: { onPickDay, range },
+            day: { onPickDay, range } as ICustomDayProps,
           }}
         />
       </LocalizationProvider>

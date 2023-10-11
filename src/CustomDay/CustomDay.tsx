@@ -6,7 +6,6 @@ import { ICustomDayProps } from "./CustomDay.type";
 const CustomDayBase: ComponentType<
   PickersDayProps<Dayjs> & ICustomDayProps
 > = ({ day, onPickDay, range }) => {
-  console.log("custom day base");
   const date = day.toDate();
 
   const [isStart, setIsStart] = useState(false);
@@ -53,7 +52,6 @@ const CustomDayBase: ComponentType<
 export default CustomDayBase;
 
 export const CustomDay: ComponentType<PickersDayProps<Dayjs>> = (props) => {
-  console.log("hoc");
   return (
     <CustomDayBase {...(props as PickersDayProps<Dayjs> & ICustomDayProps)} />
   );

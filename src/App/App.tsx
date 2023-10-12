@@ -1,5 +1,5 @@
-import { FC } from "react";
-import DateRange from "../DateRange/DateRange";
+import { FC } from 'react';
+import DateRange from '../DateRange/DateRange';
 
 const App: FC = () => {
   return (

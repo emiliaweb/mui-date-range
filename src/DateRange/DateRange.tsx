@@ -1,10 +1,10 @@
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { FC, useState } from "react";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
-import { IDateRange } from "./DateRange.type";
-import { CustomDay } from "../CustomDay/CustomDay";
-import { ICustomDayProps } from "../CustomDay/CustomDay.type";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { FC, useState } from 'react';
+import { CustomDay } from '../CustomDay/CustomDay';
+import { ICustomDayProps } from '../CustomDay/CustomDay.type';
+import { IDateRange } from './DateRange.type';
 
 const DateRange: FC = () => {
   const [range, setRange] = useState<IDateRange>({
@@ -64,9 +64,11 @@ const DateRange: FC = () => {
           closeOnSelect={false}
           slots={{
             day: CustomDay,
+            // textField: CustomField,
           }}
           slotProps={{
             day: { onPickDay, range } as ICustomDayProps,
+            textField: { value: dayjs(range.end), disabled: true },
           }}
         />
       </LocalizationProvider>

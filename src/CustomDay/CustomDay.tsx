@@ -1,7 +1,7 @@
-import { PickersDayProps, PickersDay } from "@mui/x-date-pickers";
-import { Dayjs } from "dayjs";
-import { useState, useEffect, ComponentType } from "react";
-import { ICustomDayProps } from "./CustomDay.type";
+import { PickersDay, PickersDayProps } from '@mui/x-date-pickers';
+import { Dayjs } from 'dayjs';
+import React, { ComponentType, useEffect, useState } from 'react';
+import { ICustomDayProps } from './CustomDay.type';
 
 const CustomDayBase: ComponentType<
   PickersDayProps<Dayjs> & ICustomDayProps
@@ -51,8 +51,10 @@ const CustomDayBase: ComponentType<
 
 export default CustomDayBase;
 
-export const CustomDay: ComponentType<PickersDayProps<Dayjs>> = (props) => {
-  return (
-    <CustomDayBase {...(props as PickersDayProps<Dayjs> & ICustomDayProps)} />
-  );
-};
+export const CustomDay: ComponentType<PickersDayProps<Dayjs>> = React.memo(
+  (props) => {
+    return (
+      <CustomDayBase {...(props as PickersDayProps<Dayjs> & ICustomDayProps)} />
+    );
+  }
+);

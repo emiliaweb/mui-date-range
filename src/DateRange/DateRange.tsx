@@ -1,28 +1,21 @@
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { Button, IconButtonProps } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { ElementType, FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useState } from 'react';
 import { CustomDay } from '../CustomDay/CustomDay';
 import { ICustomDayProps } from '../CustomDay/CustomDay.type';
 import CustomField from '../CustomField/CustomField';
 import { ICustomFieldProps } from '../CustomField/CustomField.type';
+import CustomOpenButton from '../CustomOpenButton/CustomOpenButton';
+import { formatDate, today } from '../utils/utils';
 import { IDateRange } from './DateRange.type';
-
-const CustomOpenButton: ElementType<IconButtonProps> = ({onClick}) => {
-  return (
-    <Button sx={{padding: '8px', minWidth: 'auto'}} onClick={onClick}>
-      <CalendarMonthIcon/>
-    </Button>
-  );
-};
 
 const DateRange: FC = () => {
   const [range, setRange] = useState<IDateRange>({
     start: 0,
     end: 0,
   });
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const onPickDay = (day: Date) => {
     setRange((prev) => {
@@ -65,20 +58,15 @@ const DateRange: FC = () => {
       };
     });
   };
-
-  const today = new Date();
-
-  const formatDate = (date: Date) => dayjs(date).format('DD-MM-YYYY');
+  
+  const onFieldClick = (e: MouseEvent) => {
+    setAnchorEl(e.currentTarget as HTMLElement);
+  };
 
   const dateString = range.start && range.end ? `${formatDate(range.start)} to ${formatDate(range.end)}` 
   : range.end ? `${formatDate(range.end)}` : 'Select a date'; 
   console.log(range, dateString);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const onFieldClick = (e: MouseEvent) => {
-    setAnchorEl(e.currentTarget as HTMLElement);
-  };
 
   return (
     <>

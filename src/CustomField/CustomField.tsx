@@ -4,10 +4,10 @@ import { Dayjs } from 'dayjs';
 import { ComponentType } from 'react';
 import { ICustomFieldProps } from './CustomField.type';
 
-const CustomFieldBase: ComponentType<BaseSingleInputFieldProps<Dayjs | null, Dayjs, FieldSection, any> & ICustomFieldProps> = ({dateString, InputProps}) => {
+const CustomFieldBase: ComponentType<BaseSingleInputFieldProps<Dayjs | null, Dayjs, FieldSection, any> & ICustomFieldProps> = ({dateString, InputProps, sx}) => {
   return (
     <>
-      <Input sx={{minWidth: 250, userSelect: 'none'}} endAdornment={InputProps?.endAdornment} value={dateString}/>
+      <Input sx={{minWidth: '250px', ...sx}} endAdornment={InputProps?.endAdornment} value={dateString}/>
     </>
   );
 };

@@ -70,9 +70,9 @@ const DateRange: FC = () => {
 
   const formatDate = (date: Date) => dayjs(date).format('DD-MM-YYYY');
 
-  const fieldValue = range.start && range.end ? `${formatDate(range.start)} to ${formatDate(range.end)}` 
+  const dateString = range.start && range.end ? `${formatDate(range.start)} to ${formatDate(range.end)}` 
   : range.end ? `${formatDate(range.end)}` : 'Select a date'; 
-  console.log(range, fieldValue);
+  console.log(range, dateString);
 
   return (
     <>
@@ -88,7 +88,7 @@ const DateRange: FC = () => {
           }}
           slotProps={{
             day: { onPickDay, range } as ICustomDayProps,
-            field: { dateString: fieldValue } as ICustomFieldProps
+            field: { dateString } as ICustomFieldProps
           }}
         />
       </LocalizationProvider>

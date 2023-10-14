@@ -3,7 +3,7 @@ import { Button, IconButtonProps } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { ElementType, FC, useState } from 'react';
+import { ElementType, FC, MouseEvent, useState } from 'react';
 import { CustomDay } from '../CustomDay/CustomDay';
 import { ICustomDayProps } from '../CustomDay/CustomDay.type';
 import CustomField from '../CustomField/CustomField';
@@ -74,6 +74,12 @@ const DateRange: FC = () => {
   : range.end ? `${formatDate(range.end)}` : 'Select a date'; 
   console.log(range, dateString);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const onFieldClick = (e: MouseEvent) => {
+    setAnchorEl(e.currentTarget as HTMLElement);
+  };
+
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -87,8 +93,9 @@ const DateRange: FC = () => {
           }}
           slotProps={{
             day: { onPickDay, range } as ICustomDayProps,
-            field: { dateString } as ICustomFieldProps,
-            inputAdornment: {sx: {height: 'auto', maxHeight: '100%'}}
+            field: { dateString, onClick: onFieldClick } as ICustomFieldProps,
+            inputAdornment: {sx: {height: 'auto', maxHeight: '100%'}},
+            popper: {anchorEl: anchorEl}
           }}
         />
       </LocalizationProvider>
@@ -97,3 +104,5 @@ const DateRange: FC = () => {
 };
 
 export default DateRange;
+
+// sx: {position: 'absolute !important', top: 'unset !important', left: 'unset !important'}

@@ -76,7 +76,6 @@ const DateRange: FC = () => {
 
   return (
     <>
-      <div style={{}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           defaultValue={dayjs(today)}
@@ -92,7 +91,6 @@ const DateRange: FC = () => {
           }}
         />
       </LocalizationProvider>
-      </div>
     </>
   );
 };

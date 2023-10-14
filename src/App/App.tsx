@@ -4,7 +4,7 @@ import DateRange from '../DateRange/DateRange';
 const App: FC = () => {
   return (
     <div>
-      <DateRange />
+      <DateRange getValues={console.log} />
     </div>
   );
 };

@@ -1,16 +1,16 @@
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import { CustomDay } from '../CustomDay/CustomDay';
 import { ICustomDayProps } from '../CustomDay/CustomDay.type';
 import CustomField from '../CustomField/CustomField';
 import { ICustomFieldProps } from '../CustomField/CustomField.type';
 import CustomOpenButton from '../CustomOpenButton/CustomOpenButton';
 import { formatDate, today } from '../utils/utils';
-import { IDateRange } from './DateRange.type';
+import { IDateRange, IDateRangeProps } from './DateRange.type';
 
-const DateRange: FC = () => {
+const DateRange: FC<IDateRangeProps> = ({getValues}) => {
   const [range, setRange] = useState<IDateRange>({
     start: 0,
     end: 0,
@@ -65,8 +65,10 @@ const DateRange: FC = () => {
 
   const dateString = range.start && range.end ? `${formatDate(range.start)} to ${formatDate(range.end)}` 
   : range.end ? `${formatDate(range.end)}` : 'Select a date'; 
-  console.log(range, dateString);
 
+  useEffect(() => {
+    getValues(range);
+  }, [range.start, range.end]);
 
   return (
     <>

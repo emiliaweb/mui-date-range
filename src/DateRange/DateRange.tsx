@@ -87,7 +87,8 @@ const DateRange: FC = () => {
           }}
           slotProps={{
             day: { onPickDay, range } as ICustomDayProps,
-            field: { dateString } as ICustomFieldProps
+            field: { dateString } as ICustomFieldProps,
+            inputAdornment: {sx: {height: 'auto', maxHeight: '100%'}}
           }}
         />
       </LocalizationProvider>

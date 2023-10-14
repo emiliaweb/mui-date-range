@@ -1,10 +1,22 @@
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Button, IconButtonProps } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { FC, useState } from 'react';
+import { ElementType, FC, useState } from 'react';
 import { CustomDay } from '../CustomDay/CustomDay';
 import { ICustomDayProps } from '../CustomDay/CustomDay.type';
+import CustomField from '../CustomField/CustomField';
+import { ICustomFieldProps } from '../CustomField/CustomField.type';
 import { IDateRange } from './DateRange.type';
+
+const CustomOpenButton: ElementType<IconButtonProps> = ({onClick}) => {
+  return (
+    <Button sx={{padding: '8px', minWidth: 'auto'}} onClick={onClick}>
+      <CalendarMonthIcon/>
+    </Button>
+  );
+};
 
 const DateRange: FC = () => {
   const [range, setRange] = useState<IDateRange>({
@@ -54,24 +66,33 @@ const DateRange: FC = () => {
     });
   };
 
-  console.log(range);
+  const today = new Date();
+
+  const formatDate = (date: Date) => dayjs(date).format('DD-MM-YYYY');
+
+  const fieldValue = range.start && range.end ? `${formatDate(range.start)} to ${formatDate(range.end)}` 
+  : range.end ? `${formatDate(range.end)}` : 'Select a date'; 
+  console.log(range, fieldValue);
 
   return (
     <>
+      <div style={{}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          defaultValue={dayjs(new Date())}
+          defaultValue={dayjs(today)}
           closeOnSelect={false}
           slots={{
             day: CustomDay,
-            // textField: CustomField,
+            field: CustomField,
+            openPickerButton: CustomOpenButton
           }}
           slotProps={{
             day: { onPickDay, range } as ICustomDayProps,
-            textField: { value: dayjs(range.end), disabled: true },
+            field: { dateString: fieldValue } as ICustomFieldProps
           }}
         />
       </LocalizationProvider>
+      </div>
     </>
   );
 };

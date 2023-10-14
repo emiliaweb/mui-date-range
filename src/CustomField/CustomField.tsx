@@ -1,12 +1,17 @@
-import TextField, { TextFieldProps } from '@mui/material/TextField';
-import { ElementType } from 'react';
+import { Input } from '@mui/material';
+import { BaseSingleInputFieldProps, FieldSection } from '@mui/x-date-pickers';
+import { Dayjs } from 'dayjs';
+import { ComponentType } from 'react';
+import { ICustomFieldProps } from './CustomField.type';
 
-const CustomField: ElementType<TextFieldProps> = () => {
+const CustomField: ComponentType<BaseSingleInputFieldProps<Dayjs | null, Dayjs, FieldSection, any> & ICustomFieldProps> = ({dateString, InputProps}) => {
   return (
     <>
-      <TextField></TextField>
+      <Input sx={{minWidth: 250, userSelect: 'none'}} endAdornment={InputProps?.endAdornment} value={dateString}/>
     </>
   );
 };
 
 export default CustomField;
+
+// width: '100%'
